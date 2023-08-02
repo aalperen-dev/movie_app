@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/model/movie.dart';
-import 'package:movie_app/widget/horizontal_list.dart';
-import 'package:movie_app/widget/toprated_list.dart';
-import 'package:movie_app/widget/vertical_list.dart';
+
+import '../model/movie.dart';
+import '../widget/horizontal_list.dart';
+import '../widget/toprated_list.dart';
+import '../widget/vertical_list.dart';
 
 class DasboardScreen extends StatelessWidget {
   const DasboardScreen({super.key});
@@ -40,7 +41,7 @@ class DasboardScreen extends StatelessWidget {
                   TextButton(
                     onPressed: () {},
                     child: const Text(
-                      "ViewAll",
+                      "View All",
                     ),
                   ),
                 ],

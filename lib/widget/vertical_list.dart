@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../model/movie.dart';
+import '../screens/movie_detail.dart';
 
 class VerticalListItem extends StatelessWidget {
   final int index;
@@ -10,47 +12,65 @@ class VerticalListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Card(
-          elevation: 5,
-          child: Row(
-            children: [
-              Container(
-                height: 150,
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    topLeft: Radius.circular(5),
-                  ),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(bestMovieList[index].imageUrl),
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                height: 150,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      bestMovieList[index].title,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              MovieDetails.routeName,
+              arguments: {
+                'id': bestMovieList[index].id,
+                'title': bestMovieList[index].title,
+                'imageUrl': bestMovieList[index].imageUrl,
+                'description': bestMovieList[index].description,
+                'rating': bestMovieList[index].rating,
+                'year': bestMovieList[index].year,
+                'duration': bestMovieList[index].duration,
+              },
+            );
+          },
+          child: Card(
+            elevation: 5,
+            child: Row(
+              children: [
+                Hero(
+                  tag: bestMovieList[index].id,
+                  child: Container(
+                    height: 150,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(5),
+                        topLeft: Radius.circular(5),
+                      ),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(bestMovieList[index].imageUrl),
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    const SizedBox(
-                      width: 240,
-                      child: Text(
-                          'And secondly we have the pleasingly symmetrical Chinese poster featuring absolutely everyone – Cap is at the centre of things, with Iron Man at the top, and Thanos once again hovering over it all.'),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  height: 150,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        bestMovieList[index].title,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        width: 240,
+                        child: Text(bestMovieList[index].description),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         const SizedBox(

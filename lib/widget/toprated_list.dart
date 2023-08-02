@@ -1,6 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import '../model/movie.dart';
+import '../screens/movie_detail.dart';
 
 class TopRatedItem extends StatelessWidget {
   final int index;
@@ -16,31 +17,50 @@ class TopRatedItem extends StatelessWidget {
         right: 10,
       ),
       width: 160.0,
-      child: Column(
-        children: [
-          Card(
-            elevation: 10,
-            child: Container(
-              height: 200.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(topRatedMovieList[index].imageUrl),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushNamed(
+            MovieDetails.routeName,
+            arguments: {
+              'id': topRatedMovieList[index].id,
+              'title': topRatedMovieList[index].title,
+              'imageUrl': topRatedMovieList[index].imageUrl,
+              'description': topRatedMovieList[index].description,
+              'rating': topRatedMovieList[index].rating,
+              'year': topRatedMovieList[index].year,
+              'duration': topRatedMovieList[index].duration,
+            },
+          );
+        },
+        child: Column(
+          children: [
+            Card(
+              elevation: 10,
+              child: Hero(
+                tag: topRatedMovieList[index].id,
+                child: Container(
+                  height: 200.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(topRatedMovieList[index].imageUrl),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            topRatedMovieList[index].title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+            const SizedBox(height: 10),
+            Text(
+              topRatedMovieList[index].title,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
